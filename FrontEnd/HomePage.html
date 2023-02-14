@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+        </style>
+        <link rel="stylesheet" href="Stylesheet.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="main-container" id="main-container">
+            <div class="memory-form" id="memory-form">
+                    <h1>Add A Memory</h1>
+                    <label for="m_name">Memory Name</label><br>
+                    <input type="text" id="m_name" name="m_name"><br>
+                    <label for="m_desc">Describe It</label><br>
+                    <textarea id="m_desc" name="m_desc"></textarea><br>
+                    <label for="m_date">Date</label><br>
+                    <input type="date" id="m_date" name="m_date"><br><br>
+                    <button class="save-mem" id="save-mem">Save Memory</button>
+            </div>
+        </div>
+        <div class="lower-container" id="lower-container">
+            <div class="all-mem-container" id="all-mem-container">
+                <h1>Show All Memories</h1>
+                <button class="all-mem-btn" id="all-mem-btn">All Memories</button>
+            </div>
+            <div class="specific-mem-container" id="specific-mem-container">
+                <h1>Find Specific Memory</h1>  
+                <label for="sm_name">Memory Name</label><br> 
+                <input type="text" id="sm_name" name="sm_name"><br><br>
+                <button class="s-mem-btn" id="s-mem-btn">Find Memory</button>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,72 @@
+*{
+    font-family: 'Indie Flower', cursive;
+
+}
+body{
+    background-image: url('Images/Memory.gif');
+    background-size: cover;
+    
+    background-attachment: fixed;
+    
+    /* height: 100vh;
+    padding:0;
+    margin:0; */
+}
+button{
+    color: white;
+    font-size: 20px;
+    border-radius: 10px;
+    background-color: transparent;
+    border-color: white;
+}
+button:hover{
+        cursor: pointer;
+        background-image:  url('Images/ButtonClick.gif');
+}
+button:active{
+    font-size: 25px;
+}
+
+.main-container{
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    /* border: 5px;
+    border-style: solid;
+    border-color: black; */
+    color: white;
+}
+.lower-container{
+    padding: 25px;
+    display: flex;
+    justify-content: space-evenly;
+    color: white;
+}
+
+.memory-form{
+    padding: 25px;
+    text-align: center;
+    align-items: center;
+    border: 5px;
+    border-style: solid;
+    border-radius: 15px;
+    border-color: white;
+}
+.all-mem-container{
+    padding: 25px;
+    text-align: center;
+    align-items: center;
+    border: 5px;
+    border-style: solid;
+    border-radius: 15px;
+    border-color: white;
+}
+.specific-mem-container{
+    padding: 25px;
+    text-align: center;
+    align-items: center;
+    border: 5px;
+    border-style: solid;
+    border-radius: 15px;
+    border-color: white;
+}
