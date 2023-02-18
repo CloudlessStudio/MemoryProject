@@ -70,3 +70,93 @@ button:active{
     border-radius: 15px;
     border-color: white;
 }
+#all-mem-container-page{
+    padding: 25px;
+    display: flex;
+    justify-content: space-evenly;
+    color: white;
+
+}
+#mem-box{
+    padding: 25px;
+    text-align: center;
+    align-items: center;
+    border: 5px;
+    border-style: solid;
+    border-radius: 15px;
+    border-color: white;
+}
+
+@media only screen and (max-width: 500px){
+    
+    body{
+        background-image: url('Images/Memory.gif');
+        background-size: cover;
+        background-position: center;
+    }
+    .main-container{
+        padding: 25px;
+        display: flex;
+        justify-content: center;
+        /* border: 5px;
+        border-style: solid;
+        border-color: black; */
+        color: white;
+    }
+    .memory-form{
+        padding: 25px;
+        text-align: center;
+        align-items: center;
+        border: 5px;
+        border-style: solid;
+        border-radius: 15px;
+        border-color: white;
+        font-size: 30px;
+    }
+    .lower-container{
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: white;
+    }
+    .all-mem-container{
+        font-size: 25px;
+        padding: 25px;
+        text-align: center;
+        align-items: center;
+        border: 5px;
+        border-style: solid;
+        border-radius: 15px;
+        border-color: white;
+    }
+    #all-mem-container-page{
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: white;
+    }
+
+      #mem-box{
+        font-size: 25px;
+        margin-bottom: 10px;
+        padding: 25px;
+        text-align: center;
+        align-items: center;
+        border: 5px;
+        border-style: solid;
+        border-radius: 15px;
+        border-color: white;
+    }
+    .specific-mem-container{
+        font-size: 25px;
+        padding: 25px;
+        text-align: center;
+        align-items: center;
+        border: 5px;
+        border-style: solid;
+        border-radius: 15px;
+        border-color: white;
+    }
+}

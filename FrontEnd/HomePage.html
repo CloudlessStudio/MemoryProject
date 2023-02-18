@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+    <meta name="viewport" content="with=device-width, initial-scale=1.0">
+
     <head>
         <style>
         </style>
@@ -7,9 +9,10 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+        
     </head>
 
-    <body>
+    <body id='body'>
         <div class="main-container" id="main-container">
             <div class="memory-form" id="memory-form">
                     <h1>Add A Memory</h1>
@@ -27,6 +30,7 @@
                 <h1>Show All Memories</h1>
                 <button class="all-mem-btn" id="all-mem-btn">All Memories</button>
             </div>
+            <br><br>
             <div class="specific-mem-container" id="specific-mem-container">
                 <h1>Find Specific Memory</h1>  
                 <label for="sm_name">Memory Name</label><br> 
@@ -35,4 +39,209 @@
             </div>
         </div>
     </body>
+
+    <script>
+        const saveMemoryBtn = document.getElementById('save-mem'); //memory save button
+        const allMemoryBtn = document.getElementById('all-mem-btn');//view all memories button
+        const findMemoryBtn = document.getElementById('s-mem-btn'); //find specific memory
+        //find specific memory-------------------------------------------------------------------------------------
+        function find_memory(){
+            const specific_memory = document.getElementById("sm_name").value;
+ 
+            const body = document.getElementById('body');
+            body.innerHTML = "";
+            const memories_container = document.createElement('div');
+            memories_container.id = 'all-mem-container-page';
+            getMemories(specific_memory);
+            function getMemories(s) {
+                fetch(`http://localhost:3000/memories/${s}`)
+                    .then(response => {
+                    if (response.status === 404) {
+                        throw new Error("Memory not found");
+                    }
+                    return response.json();
+                    })
+                    .then(memData => {
+                    console.log(memData);
+                    displayData(memData);
+                    })
+                    .catch(error => {
+                    console.log(error.message);
+                    const errorMessage = document.createElement("h1");
+                    errorMessage.innerText = "This memory does not exist!"
+                    memories_container.append(errorMessage);
+                    body.append(memories_container);
+                    });
+                }
+            function displayData(memData){
+                if(memData.memName===undefined){
+                    const errorMessage = document.createElement("h1");
+                    errorMessage.innerText = "This memory does not exist!"
+                    memories_container.append(errorMessage);
+                    body.append(memories_container);
+                }
+                else{
+
+                console.log(`our data is${memData.memName}`);
+                
+                const forget_btn = document.createElement('button');
+                forget_btn.id = "forget";
+                forget_btn.innerHTML = 'Forget';
+                const memory_box = document.createElement('div');
+                memory_box.id = 'mem-box';
+                memory_box.innerHTML = `
+                <h1>${memData.memName}</h1>
+                <h2>${memData.memDate.slice(0,10)}</h2>
+                <p>${memData.memDesc}</p>
+                `
+                memory_box.append(forget_btn);
+                memories_container.append(memory_box);
+                
+                body.append(memories_container);
+                forget_btn.addEventListener('click',()=>{
+                    deleteMemory(memData.memName);
+                })
+            }
+                
+            }
+            function deleteMemory(id){
+                fetch(`http://localhost:3000/memories/${id}`,{
+                    method: 'DELETE'
+                })
+                .then(response=>{
+                    if(response.ok){
+                        console.log("memory deleted");
+                        window.location.reload();
+                    }
+                    else{
+                        console.log("error deleting!")
+                    }
+                })
+                .catch(error=>{
+                    console.log("error deleting memory", error);
+                    alert("Can't forget that one for some reason!");
+                })
+            }
+            const backBtn = document.createElement('button');
+            backBtn.innerText = "Go Back";
+            
+            body.append(backBtn);
+
+            backBtn.addEventListener('click', ()=>{
+                window.location.reload();
+            })
+
+
+        }
+
+        
+        //save memory to our sql database------------------------------------------------------------------------------
+        function save_memory(){
+            const memoryName = document.getElementById('m_name').value; //getting the input for memory name
+            const memoryDescription = document.getElementById('m_desc').value; //getting the input for memory desc
+            const memoryDate = document.getElementById('m_date').value; //getting input for th ememory date
+            console.log(memoryDate);
+         
+ 
+            //post request to server
+            fetch('http://localhost:3000/memories',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    memName: memoryName,
+                    memDesc: memoryDescription,
+                    memDate: memoryDate
+                })
+            })
+            .then(response =>{
+                if(response.ok){
+                    console.log("Memory Kept");
+                }
+                else{
+                    console.log("Memory Lost");
+                }
+            })
+            .catch(error =>{
+                console.error("Error saving memory", error);
+            });
+        }
+        //view all memories------------------------------------------------------------------------------------------
+        function view_memories(){
+            const body = document.getElementById('body');
+            body.innerHTML = "";
+            const memories_container = document.createElement('div');
+            memories_container.id = 'all-mem-container-page';
+            getMemories();
+            function getMemories(){
+                fetch('http://localhost:3000/memories')
+                .then(response=>response.json())
+                .then(r=>{
+                    console.log(r);
+                    displayData(r);
+                })
+            }
+            function displayData(memData){
+                console.log(memData);
+                for(let i = 0; i<memData.length; i++){
+                const forget_btn = document.createElement('button');
+                forget_btn.id = "forget";
+                forget_btn.innerHTML = 'Forget';
+                const memory_box = document.createElement('div');
+                memory_box.id = 'mem-box';
+                memory_box.innerHTML = `
+                <h1>${memData[i].memName}</h1>
+                <h2>${memData[i].memDate.slice(0,10)}</h2>
+                <p>${memData[i].memDesc}</p>
+                `
+                memory_box.append(forget_btn);
+                memories_container.append(memory_box);
+                
+                body.append(memories_container);
+                forget_btn.addEventListener('click',()=>{
+                    deleteMemory(memData[i].memName);
+                })
+            }
+            }
+            function deleteMemory(id){
+                fetch(`http://localhost:3000/memories/${id}`,{
+                    method: 'DELETE'
+                })
+                .then(response=>{
+                    if(response.ok){
+                        console.log("memory deleted");
+                        window.location.reload();
+                    }
+                    else{
+                        console.log("error deleting!")
+                    }
+                })
+                .catch(error=>{
+                    console.log("error deleting memory", error);
+                    alert("Can't forget that one for some reason!");
+                })
+            }
+            const backBtn = document.createElement('button');
+            backBtn.innerText = "Go Back";
+            
+            body.append(backBtn);
+
+            backBtn.addEventListener('click', ()=>{
+                window.location.reload();
+            })
+
+
+        }
+        findMemoryBtn.addEventListener('click',()=>{
+            find_memory();
+        })
+        saveMemoryBtn.addEventListener('click', ()=>{
+            save_memory();
+        })
+
+        allMemoryBtn.addEventListener('click', ()=>{
+            view_memories();
+        })
+    </script>
 </html>
